@@ -1,0 +1,17 @@
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\component\RedisComponent.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\config\AppConfig.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\config\CorsConfig.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\config\MPConfig.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\entity\constants\Constants.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\entity\constants\ProductBase.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\entity\constants\RecommendProduct.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\entity\constants\SysCategory.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\entity\constants\vo\CheckCodeVO.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\entity\constants\vo\ResponseVO.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\enums\DateEnum.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\redis\RedisConfig.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\utils\FFmpegUtils.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\utils\FileUtils.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\utils\JwtUtil.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\utils\RedisUtils.java
+E:\EasyMall\mall-java\mall-common\src\main\java\com\easymall\utils\StringTooles.java

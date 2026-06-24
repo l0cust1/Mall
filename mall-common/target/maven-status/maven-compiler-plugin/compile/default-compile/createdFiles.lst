@@ -1,0 +1,17 @@
+com\easymall\component\RedisComponent.class
+com\easymall\entity\constants\Constants.class
+com\easymall\utils\FileUtils.class
+com\easymall\config\CorsConfig.class
+com\easymall\utils\JwtUtil.class
+com\easymall\config\AppConfig.class
+com\easymall\utils\StringTooles.class
+com\easymall\entity\constants\RecommendProduct.class
+com\easymall\utils\FFmpegUtils.class
+com\easymall\entity\constants\vo\ResponseVO.class
+com\easymall\entity\constants\ProductBase.class
+com\easymall\entity\constants\vo\CheckCodeVO.class
+com\easymall\redis\RedisConfig.class
+com\easymall\entity\constants\SysCategory.class
+com\easymall\enums\DateEnum.class
+com\easymall\utils\RedisUtils.class
+com\easymall\config\MPConfig.class
