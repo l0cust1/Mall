@@ -5,13 +5,17 @@ import com.easymall.entity.DTO.BindPhoneRequest;
 import com.easymall.entity.DTO.GenderUpdateRequest;
 import com.easymall.entity.DTO.PasswordUpdateRequest;
 import com.easymall.entity.SysUser;
+import com.easymall.entity.VO.UserAddressVO;
 import com.easymall.entity.constants.vo.ResponseVO;
 import com.easymall.service.SysUserService;
+import com.easymall.service.UserAddressService;
 import com.easymall.service.VerificationCodeService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/info")
@@ -26,10 +30,26 @@ public class UserInfoController extends ABaseController{
     @Autowired
     private VerificationCodeService verificationCodeService;
 
+    @Autowired
+    private UserAddressService userAddressService;
+
     // 获取当前登录用户（从请求域或通过token解析）
     private SysUser getCurrentUser(HttpServletRequest request) {
         // 假设在JWT拦截器中已将用户存入request attribute
         return (SysUser) request.getAttribute("currentUser");
+    }
+
+    /**
+     * 获取当前用户的收货地址列表
+     */
+    @GetMapping("/addressList")
+    public ResponseVO<List<UserAddressVO>> getAddressList(HttpServletRequest request) {
+        SysUser user = getCurrentUser(request);
+        if (user == null) {
+            return getFailResponseVO("用户未登录");
+        }
+        List<UserAddressVO> addressList = userAddressService.listAddressVOByUserId(user.getUserId());
+        return getSuccessResponseVO(addressList);
     }
 
     /**

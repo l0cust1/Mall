@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 
 @Data
 public class RecommendProductVO implements Serializable {
-    private Long id;
-    private Long productId;
+    private String id;
+    private String productId;
     private String productName;
     private String productImage;
     private BigDecimal price;

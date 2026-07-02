@@ -1,17 +1,20 @@
 package com.easymall.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.easymall.entity.constants.RecommendProduct;
 import com.easymall.mapper.RecommendProductMapper;
 import com.easymall.service.RecommendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
 import static com.easymall.entity.constants.Constants.HOME_AGGREGATE_PREFIX;
 
-public class RecommendServiceImpl implements RecommendService {
+@Service
+public class RecommendServiceImpl extends ServiceImpl<RecommendProductMapper,RecommendProduct> implements RecommendService {
     @Autowired
     private RecommendProductMapper recommendMapper;
 
@@ -44,13 +47,15 @@ public class RecommendServiceImpl implements RecommendService {
     @Override
     public void clearRecommendCache() {
 
-
         // 删除所有首页聚合缓存
         Set<String> keys = redisTemplate.keys(HOME_AGGREGATE_PREFIX + "*");
         if (keys != null && !keys.isEmpty()) {
             redisTemplate.delete(keys);
 
         }
+
+        // 同时删除推荐商品独立缓存（mall-web 端使用）
+        redisTemplate.delete("recommend:home:hot");
 
     }
 }

@@ -11,6 +11,7 @@ import com.easymall.entity.ProductInfoQuery;
 import com.easymall.entity.ProductProperty;
 import com.easymall.entity.ProductSku;
 import com.easymall.entity.vo.ModifyStockVO;
+import com.easymall.entity.vo.PriceVO;
 import com.easymall.entity.vo.ProductListVO;
 import com.easymall.mapper.ProductBaseMapper;
 import com.easymall.mapper.ProductPropertyMapper;
@@ -89,7 +90,41 @@ public class ProductServiceImpl extends ServiceImpl<ProductBaseMapper, ProductBa
         product.setCommendType(commendType);
         productBaseMapper.updateById(product);
     }
-    
+    /**
+     * 修改商品价格区间
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePrice(String productId, PriceVO priceVO) {
+        if (productId == null || productId.trim().isEmpty()) {
+            throw new IllegalArgumentException("商品ID不能为空");
+        }
+        if (priceVO == null) {
+            throw new IllegalArgumentException("价格数据不能为空");
+        }
+        if (priceVO.getMinPrice() == null || priceVO.getMaxPrice() == null) {
+            throw new IllegalArgumentException("最低价和最高价不能为空");
+        }
+        if (priceVO.getMinPrice().compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("最低价不能为负数");
+        }
+        if (priceVO.getMaxPrice().compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("最高价不能为负数");
+        }
+        if (priceVO.getMaxPrice().compareTo(priceVO.getMinPrice()) < 0) {
+            throw new IllegalArgumentException("最高价不能小于最低价");
+        }
+
+        ProductBase product = productBaseMapper.selectById(productId);
+        if (product == null) {
+            throw new RuntimeException("商品不存在");
+        }
+
+        product.setMinPrice(priceVO.getMinPrice());
+        product.setMaxPrice(priceVO.getMaxPrice());
+        productBaseMapper.updateById(product);
+    }
+
     /**
      * 修改商品上下架状态
      */

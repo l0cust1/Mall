@@ -3,7 +3,9 @@
     "allow": [
       "Agent(Explore)",
       "Bash(mvn *)",
-      "Bash(type *)"
+      "Bash(type *)",
+      "Bash(findstr *)",
+      "Bash(del *)"
     ]
   },
   "$version": 4

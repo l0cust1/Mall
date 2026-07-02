@@ -6,6 +6,7 @@ import com.easymall.entity.DTO.UpdateStockDTO;
 import com.easymall.entity.ProductBase;
 import com.easymall.entity.ProductInfoQuery;
 import com.easymall.entity.constants.vo.ResponseVO;
+import com.easymall.entity.vo.PriceVO;
 import com.easymall.entity.vo.ProductListVO;
 import com.easymall.service.ProductService;
 import jakarta.annotation.Resource;
@@ -202,6 +203,29 @@ public class ProductController extends ABaseController {
             return getFailResponseVO("修改备注失败: " + e.getMessage());
         }
 
+    }
+
+    /**
+     * 修改商品价格区间
+     */
+    @PostMapping("/updatePrice/{productId}")
+    public ResponseVO updatePrice(@PathVariable String productId,
+                                  @RequestBody PriceVO priceVO) {
+        try {
+            if (productId == null || productId.trim().isEmpty()) {
+                return getFailResponseVO("商品ID不能为空");
+            }
+            productService.updatePrice(productId, priceVO);
+            log.info("商品价格区间修改成功: {}, minPrice: {}, maxPrice: {}",
+                    productId, priceVO.getMinPrice(), priceVO.getMaxPrice());
+            return getSuccessResponseVO(null);
+        } catch (IllegalArgumentException e) {
+            log.warn("修改价格参数错误: {}", e.getMessage());
+            return getFailResponseVO(e.getMessage());
+        } catch (Exception e) {
+            log.error("修改价格失败: {}", e.getMessage(), e);
+            return getFailResponseVO("修改价格失败: " + e.getMessage());
+        }
     }
 
 

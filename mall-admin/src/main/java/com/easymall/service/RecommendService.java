@@ -1,9 +1,10 @@
 package com.easymall.service;
 
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.easymall.entity.constants.RecommendProduct;
 
-public interface RecommendService {
+public interface RecommendService extends IService<RecommendProduct> {
 
 
 

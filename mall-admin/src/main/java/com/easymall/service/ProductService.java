@@ -7,6 +7,7 @@ import com.easymall.entity.DTO.UpdateStockDTO;
 import com.easymall.entity.ProductBase;
 import com.easymall.entity.ProductInfoQuery;
 import com.easymall.entity.vo.ModifyStockVO;
+import com.easymall.entity.vo.PriceVO;
 import com.easymall.entity.vo.ProductListVO;
 
 import java.util.List;
@@ -49,7 +50,15 @@ public interface ProductService extends IService<ProductBase> {
      */
     void updateStatus(String productId, Integer status);
 
-
+    /**
+     * 修改商品价格区间（更新 product_base 表的 min_price 和 max_price 字段）
+     * 注意：此接口仅更新商品价格区间显示，不修改 SKU 的实际价格
+     * 如需修改 SKU 价格，请通过重新发布商品（publish）实现
+     * 
+     * @param productId 商品ID
+     * @param priceVO 价格区间数据（minPrice, maxPrice）
+     */
+    void updatePrice(String productId, PriceVO priceVO);
 
     /**
      * 批量修改商品SKU库存

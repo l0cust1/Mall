@@ -1,6 +1,7 @@
 package com.easymall.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.easymall.component.RedisComponent;
 import com.easymall.entity.Carousel;
 import com.easymall.mapper.CarouselMapper;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -52,5 +55,13 @@ public class CarouselServiceImpl implements CarouselService {
     public void clearCarouselCache() {
         redisComponent.clearCarouselAllCache();
         log.info("轮播图缓存清理完毕");
+    }
+
+    // ======================== 4. 列表查询 ========================
+    @Override
+    public List<Carousel> listAllCarousels() {
+        LambdaQueryWrapper<Carousel> wrapper = new LambdaQueryWrapper<>();
+        wrapper.orderByAsc(Carousel::getSortOrder);
+        return carouselMapper.selectList(wrapper);
     }
 }

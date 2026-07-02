@@ -26,6 +26,11 @@ public class CarouselServiceImpl implements CarouselService {
     @Autowired
     private RedisComponent redisComponent;
 
+    // 本地上传目录路径（与 application.yml 中 file.upload.path 一致）
+    private static final String UPLOAD_PATH = "E:/java-ffmpeg-upload/";
+    // 前端访问前缀（需配合静态资源映射）
+    private static final String IMAGE_URL_PREFIX = "/api/upload/";
+
     // ======================== 1. 首页查询（带缓存） ========================
     @Override
     public List<CarouselVO> getHomeCarousels() {
@@ -47,12 +52,14 @@ public class CarouselServiceImpl implements CarouselService {
             return Collections.emptyList();
         }
 
-        // 1.4 Entity 转 VO
+        // 1.4 Entity 转 VO，并将本地文件路径转换为 HTTP URL
         List<CarouselVO> voList = carouselList.stream()
                 .filter(entity -> entity.getImageUrl() != null && !entity.getImageUrl().trim().isEmpty())
                 .map(entity -> {
                     CarouselVO vo = new CarouselVO();
                     BeanUtils.copyProperties(entity, vo);
+                    // 将本地路径转为 HTTP URL
+                    vo.setImageUrl(convertToHttpUrl(vo.getImageUrl()));
                     return vo;
                 })
                 .toList();
@@ -64,5 +71,24 @@ public class CarouselServiceImpl implements CarouselService {
         return voList;
     }
 
-
+    /**
+     * 将本地文件路径转换为 HTTP URL
+     * 例如: E:/java-ffmpeg-upload/banner.jpg -> /api/upload/banner.jpg
+     */
+    private String convertToHttpUrl(String imageUrl) {
+        if (imageUrl == null || imageUrl.trim().isEmpty()) {
+            return imageUrl;
+        }
+        // 已经是 HTTP/HTTPS 链接，直接返回
+        if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+            return imageUrl;
+        }
+        // 是本地文件路径，提取文件名拼接为 URL
+        if (imageUrl.startsWith(UPLOAD_PATH)) {
+            String fileName = imageUrl.substring(UPLOAD_PATH.length());
+            return IMAGE_URL_PREFIX + fileName;
+        }
+        // 其他格式直接返回
+        return imageUrl;
+    }
 }

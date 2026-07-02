@@ -1,6 +1,5 @@
 package com.easymall.controller;
 
-import com.easymall.component.RedisComponent;
 import com.easymall.entity.DTO.BrowseRecordDTO;
 import com.easymall.entity.VO.BrowseHistoryVO;
 import com.easymall.entity.constants.Constants;
@@ -11,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class BrowseHistoryController {
     private BrowseHistoryService browseHistoryService;
 
     @Autowired
-    private RedisComponent redisComponent;
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * 记录浏览行为（用户点击商品详情页时调用）
@@ -113,15 +113,18 @@ public class BrowseHistoryController {
 
             // 2. 从 Redis 中通过 RefreshToken 查询用户ID
             String redisKey = Constants.REDIS_KEY_REFRESH_TOKEN + refreshToken;
-            String userIdStr = (String) redisComponent.get(redisKey);
+            String userIdStr = stringRedisTemplate.opsForValue().get(redisKey);
             if (!StringUtils.hasText(userIdStr)) {
                 log.warn("RefreshToken 已过期或无效");
                 return null;
             }
 
             return Long.parseLong(userIdStr);
+        } catch (NumberFormatException e) {
+            log.error("解析用户ID失败，Redis中的值不是合法数字: {}", e.getMessage());
+            return null;
         } catch (Exception e) {
-            log.error("解析用户ID异常", e);
+            log.error("解析用户ID异常: {}", e.getMessage(), e);
             return null;
         }
     }

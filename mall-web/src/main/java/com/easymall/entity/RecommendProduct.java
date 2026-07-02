@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 public class RecommendProduct {
 
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private String id;
 
     /**
      * 关联 product_base.id
      */
-    private Long productId;
+    private String productId;
 
     /**
      * 商品名称（冗余字段）

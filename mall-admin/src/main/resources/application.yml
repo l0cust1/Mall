@@ -50,3 +50,15 @@ mybatis-plus:
 jwt:
   secret: "mySecretKeyForJWTGenerationAndValidation2025!@#$%^&*()_+ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz"
   expiration: 86400000
+
+# SpringDoc 接口文档配置
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  # 扫描所有接口
+  packages-to-scan: com.easymall.controller
+  paths-to-match: /**

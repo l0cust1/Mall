@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Agent(Explore)",
-      "Bash(mvn *)"
+      "Bash(mvn *)",
+      "Bash(type *)",
+      "Bash(findstr *)"
     ]
   },
   "$version": 4
