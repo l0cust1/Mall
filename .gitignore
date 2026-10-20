@@ -1,0 +1,26 @@
+# IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VSCode
+.vscode/
+
+# 各个模块的编译target
+**/target/
+
+# 日志
+*.log
+logs/
+
+# 环境配置（防止提交本地数据库密码）
+application-dev.yml
+application-local.yml
+
+# 系统缓存
+.DS_Store
+Thumbs.db
+
+# qwen插件目录，不用提交
+.qwen/

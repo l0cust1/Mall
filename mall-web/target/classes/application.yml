@@ -63,3 +63,25 @@ springdoc:
     path: /swagger-ui.html
   packages-to-scan: com.easymall.controller
   paths-to-match: /**
+# ============ 支付宝配置 ============
+alipay:
+  # 沙箱网关地址
+  gatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  # APPID
+  appId: 9021000165630812
+  # 应用私钥（PKCS8格式，带换行符）
+  appPrivateKey: "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCjO5OM++p8Refbl/4eauB/aK6ghfei9fpSe1rPz5bJQGVN7dnhM+sW4t/gJ9ozd75TfUet6/rUZNiFdD/w0uhTcwSts/7XXyhqNY5lalb/60Kx3PKJHTqT3Twk3L+2hBeVWFapodn/FB5QZpEV6ZH5hD4pCcLsW2AA1bdWjE6ORnnDSag8MkMdskzmPFa4DA44W+Gl1cdpqlUJILtxnXb54q1m4LosatLxT4w1iySF56NrHcKwwAr6SSWMeFFdHpN2+nP6FrpvXF3Ukyiev69kBDw+adXWmWF6iAJtQkBWkD1BOwM4i8w11ySC/bZwlyVxrcLFs0C2Krr7PL0DGNOjAgMBAAECggEAGNE6AblbUUGfmrdlH2LIdxaHVkiH+fLD+D5g9C9vkXGE9XAwLBkkqPodZ4snlaOjADaP61VxcVFTyhZ+kjK+t9FI6M/w8vW4w00ZNToRuB8gqMIa7dXPziNYvZICY9F5dG9V3byJ1EpOwZKWhGpak0ET4lFlnWHXGsljcnkqiF7YYakfgq6sSQLd6wMTQD2MwIlBmGSHjh+8KghjGgYo+nN9h7lqzppom10VG3tfwnhLoh5lUTCNaMo1fIV5oUrTQ9IlETWCJAESUhfDDFMeEvkMzWvsGBzIkXTOkvi5Gfy1NCBeXgUGs15Vkf/x89Nx1ag8PQYcDGoRf0kzFOVMoQKBgQDaNQd4XE7xt0cO+Sw5nATrao5lJbYFUh77KK0c8Dn53ysgv8At1BJo2/h3NJOKj8KSY5NdeOlar4ZeD5UMNZhFvjg9R34jQilsEx5k38/NsGYCyxMLTtJhHaknM5V/3EQvEbzR1+YYjdYynnNNWZ/ykJKIlc2G+w3wB1y0bXBS9wKBgQC/gRC5fRHmOBdou5rl1jn7SWIjxIOm5HxkAW034Qj5VmoPtGlY21iJlpTVrtd0MpJ2ZsGY7AyTe2GAGGfJwmMkVxdIzUAE/7EwXTOukrC4IPzhnxm08qK0xPDxbeZnaMebD8ylI08mpU4Z3JakMDYNImo1bWVw56kGUaKEKb1ttQKBgQDXhgcx16LV1lvmKzCGWlb1m1K4Du5hBQK6uit6aMAq0EWN3DdaTJw+W/5m51RPSL060AVvDo0WWEYUQ7nIzGrxf/eWdzXcZ234ZE3h/roGhJPNcH0H7zuWVrCLmsSv/ISQJSnl7iRD3lxRtPVX0g1MjYVeSPAuwWu7x9nGEE4gcwKBgQCGCqDaNGDC85/u/uF83mXXLZYz0ukTd/pZRWZdJnZRj9rNA0p5l45xP6UNrEPCYWOC3InFr/Ndh47HSk3bOuSKGyuBGakl1pL/dz0lhCeNuglHI0WrEeow/WholLQgzYZpUrW7IOvV8P6pu2z1n4k1yFDu9JN8Y6o7cgh+2XhtwQKBgDhEehkM3W6RU23Tc0y/oUZ4Z/KqY51F/oNZZrFnZ6ooLFLgmmZQIvcCgAJwZf9BssD+dXIOdUhWG0bvskjLqU07AiFROL7wZT2MNWEq48Fu5VXWkLR6Fer8mh7Ym4EPZEy9QMjZ4fxs9qXCW0HY19q6gt2kCGSZ7ZwW07lr3xFE"
+  # 支付宝公钥
+  alipayPublicKey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuAyULHpo+uqzUuPLoeX/a/7f2u78P5GWoO+4tu9dBS3A7h7y5DPPi0OfZf8FzjZ/vrkeGIeZtJ8OHsq5mMmfGi9D4hQOEX7GqthzSNfgpGjatuJSQKB5pLUnibquq1zu/pQ+90MWragut9f4KGelnzNHZX9fa9qln90TPSBBHcuO+NL9KfSnQBPrloINXLjtYSsLR1CMmei0mhPVh7VhIEUhR0laEBXcL/lMkYqwIhYwx7P4KElgPIqyLbk5bi7XuCJUuQkR+1LuIueU/VQ0IT2wMu52kKxEp63xPjWOJfcc3io3Cyp/Rq7vJCLzdBNUgIAp4po6Xwbg363IRmrREQIDAQAB"
+  # 字符集
+  charset: UTF-8
+  # 格式
+  format: json# 同步跳转地址
+  # 签名类型
+  signType: RSA2
+  # 异步通知地址
+  notifyUrl: http://x5ce7da7.natappfree.cc/api/pay/callback
+  # 同步跳转地址
+  returnUrl: http://localhost:5174/orders
+
+

@@ -2,17 +2,13 @@ package com.easymall.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
-import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -31,13 +27,16 @@ public class WebConfig implements WebMvcConfigurer {
                         // SpringDoc / Swagger UI 放行
                         "/swagger-ui/**",
                         "/swagger-ui.html",
-                        "/v3/api-docs/**",
+                        "/v3/api-docs",
                         "/webjars/**",
                         // 静态资源放行
                         "/upload/**",
 
                         "/categoryV1/first-level",
-                        "/categoryV1/getSubCategoryWithProduct"
+                        "/categoryV1/getSubCategoryWithProduct",
+
+                        // 支付宝异步回调（无登录 Token）
+                        "/pay/callback"
 
                 );
     }
@@ -53,19 +52,17 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * 跨域配置（允许前端携带 Cookie）
+     * 使用 WebMvcConfigurer 方式配置 CORS（推荐，与 Spring Boot 3.x 兼容）
      */
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5174", "http://localhost:5173", "http://localhost:8080"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // 允许携带 Cookie
-        config.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5174", "http://localhost:5173", "http://localhost:8080")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+                // 注意：当 allowCredentials 为 true 时，allowedHeaders 不能使用 * 通配符
+                .allowedHeaders("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Cache-Control")
+                .exposedHeaders("Authorization", "Content-Disposition")
+                .allowCredentials(true)
+                .maxAge(3600);
     }
 }

@@ -5,7 +5,10 @@
       "Bash(mvn *)",
       "Bash(type *)",
       "Bash(findstr *)",
-      "Bash(del *)"
+      "Bash(del *)",
+      "Bash(ren *)",
+      "Bash(dir *)",
+      "Bash(curl *)"
     ]
   },
   "$version": 4

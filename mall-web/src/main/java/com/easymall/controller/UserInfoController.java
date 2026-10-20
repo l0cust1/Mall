@@ -1,16 +1,15 @@
 package com.easymall.controller;
 
-import com.easymall.entity.DTO.BindEmailRequest;
-import com.easymall.entity.DTO.BindPhoneRequest;
-import com.easymall.entity.DTO.GenderUpdateRequest;
-import com.easymall.entity.DTO.PasswordUpdateRequest;
+import com.easymall.entity.DTO.*;
 import com.easymall.entity.SysUser;
 import com.easymall.entity.VO.UserAddressVO;
+import com.easymall.entity.VO.UserInfoVO;
 import com.easymall.entity.constants.vo.ResponseVO;
 import com.easymall.service.SysUserService;
 import com.easymall.service.UserAddressService;
 import com.easymall.service.VerificationCodeService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +36,20 @@ public class UserInfoController extends ABaseController{
     private SysUser getCurrentUser(HttpServletRequest request) {
         // 假设在JWT拦截器中已将用户存入request attribute
         return (SysUser) request.getAttribute("currentUser");
+    }
+    /**
+     * 获取用户当前个人信息
+     */
+    @GetMapping("/myinfo")
+    public ResponseVO<UserInfoVO> getMyInfo(HttpServletRequest request) {
+        SysUser user = getCurrentUser(request);
+        if (user == null) {
+            return getFailResponseVO("用户未登录");
+        }
+
+        UserInfoVO vo = new UserInfoVO();
+        BeanUtils.copyProperties(user, vo);
+        return getSuccessResponseVO(vo);
     }
 
     /**
@@ -67,6 +80,23 @@ public class UserInfoController extends ABaseController{
         user.setGender(request.getGender());
         userService.updateById(user);
         return getSuccessResponseVO("性别修改成功");
+    }
+
+    /**
+     * 修改头像
+     */
+    @PostMapping("/avatar")
+    public ResponseVO<String> updateAvatar(@RequestBody AvatarUpdateRequest request, HttpServletRequest req) {
+        SysUser user = getCurrentUser(req);
+        if (user == null) {
+            return getFailResponseVO("用户未登录");
+        }
+        if (request.getAvatar() == null || request.getAvatar().trim().isEmpty()) {
+            return getFailResponseVO("头像URL不能为空");
+        }
+        user.setAvatar(request.getAvatar());
+        userService.updateById(user);
+        return getSuccessResponseVO("头像修改成功");
     }
 
     /**
